@@ -2,3 +2,6 @@
 构造函数在定义时不写返回值
 构造函数可以直接声明（获取？）私有变量
 但仍需写get/set方法
+
+
+idea可以从code->generate 生成getter/setter（以及各类构造函数等）
