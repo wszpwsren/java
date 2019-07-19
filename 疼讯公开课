@@ -45,3 +45,41 @@ spring mvc处理controller层参数
 所有http方法交给doDispatch方法处理
 
 6.利用反射机制调用方法
+
+
+
+1事务管理流程
+
+开启事务
+执行业务操作
+提交/回滚事务
+
+2事务管理情形
+
+单数据源
+多数据源
+
+面向接口编程、策略模式
+
+3AOP
+
+4AOP，
+根据事务定义开启事务get
+try{业务操作}catch（）{回滚}
+提交
+
+ThreadLocal
+//开启事务
+tm.getTransaction(transactionDefination)         //getconnection（connection）
+ThreadLocal.put（conncection）
+	执行业务方法 insertUser（user）
+	执行业务方法 insertLog （log）
+
+spring事务坑
+1正确获取Connection
+
+使用DataSourceUtils（从线程上下文获取）
+
+2正确地进行方法调用
+
+如果方法内部调用this.方法，那么注解失效
