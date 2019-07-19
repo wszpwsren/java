@@ -183,6 +183,13 @@ new 接口名称(){}
 [[直接打印对象的名字，其实就是调用对象的toString]]（打印地址值）
 需要打印值则需要覆写toString方法
 
+this 为调用方法的对象
+ 
+Date类 java.util.Date,精确到毫秒,参数一般为long，单位毫秒
+
+DateFormat .format 格式化.parse 解析
+构造方法 simpleDateFormat（String patten）
+
 
 
 
