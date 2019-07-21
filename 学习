@@ -189,8 +189,9 @@ Date类 java.util.Date,精确到毫秒,参数一般为long，单位毫秒
 
 DateFormat .format 格式化.parse 解析
 构造方法 simpleDateFormat（String patten）
+parse方法声明了一个异常，调用了一个抛出了异常的方法，就必须处理这个异常，要么throws继续抛出异常，要么try catch自己处理
 
-
+Calendar抽象类，替代Date类
 
 
 
