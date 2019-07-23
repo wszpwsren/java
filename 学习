@@ -291,3 +291,35 @@ class xxxx<E>(){}
 
 含有泛型的接口
 
+
+泛型通配符<?>
+不知道使用什么类型来接受的时候，使用？，不能在定义时使用[[只能作为方法传入值]]
+泛型没有继承概念（不是Object类）
+
+泛型的上限限定： ? Extends E      使用的泛型只能是E类型的子类或自身
+泛型的下限限定： ？Super E       使用的泛型只能是E类型的父类或自身
+
+Collection.shuffle(List<?> list) 随机置换
+static void shuffle
+
+Collection
+Array 数组可以存储基本类型/对象
+Arraylist 集合存储的都是对象（只能）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
