@@ -192,6 +192,102 @@ DateFormat .format 格式化.parse 解析
 parse方法声明了一个异常，调用了一个抛出了异常的方法，就必须处理这个异常，要么throws继续抛出异常，要么try catch自己处理
 
 Calendar抽象类，替代Date类
+getInstance方法，给返回Calendar类的子类对象
+get(int) 返回给定日历字段的值，int可以使用Calendar类的静态成员变量获取
+year 1 month 2 （// 0-11）hour 10 minute12 second 13
+xx.get(Calander.YEAR)//静态成员变量
+set（int int） 设置字段
+add(abstract)
+getTime返回一个Date对象
 
 
+System类
+
+pulbic static long currentTimeMills（）以毫秒为单位返回当前时间
+public static void arraycopy（object src int srcpos object dest int despos int length）拷贝数组
+
+
+String 底层是一个被final修饰的数组，不可改变
+StringBuilder 底层是一个数组，可以改变长度,初始容量为16个，占用空间少，效率高
+.append方法返回的是this，返回原函数
+/*
+链式编程：当方法的返回值是一个对象，可以写一个继续调用的方法
+*/
+.append().append().append()
+
+包装类
+使用类中的方法操作基本类型的数据
+Integer i = new Integer（x）；
+构造方法Integer（string） string必须是基本类型的字符串
+静态方法
+valueof（）
+成员方法
+intvalue（）
+包装类可以自动装箱/拆箱
+
+parseXXX
+String类型转为XXX基本类型
+
+String类型与XXX基本类型之间的转换
+1.[[基本类型的值＋“”可转换为String型]]
+2.toString方法
+3.valueof方法
+
+Collection集合（单列集合顶层接口）——util
+
+集合框架（类与接口组成的架构）
+
+[[List接口]]————Vector/ArrayList/LinkedList
+1.有序集合
+2.允许存贮重复元素
+3.元素有索引
+
+[[Set接口]]————TreeSet/HashSet/LinkedHashSet
+1.不允许存储重复元素
+2.没有索引（不能使用普通for，没有带索引的方法）
+3.TreeSet/HashSet集合 存储和取出元素的顺序不一致
+
+Collection接口
+定义的是所有单列集合中共性的方法
+
+
+集合框架的学习方式：
+1.学习顶层：顶层接口/抽象类中的共性方法
+2.使用底层：创建对象使用
+
+boolean add
+void clear
+boolean remove
+boolean contains
+isEmpty
+int size
+Object[] toArray
+
+Iterator接口（获取实现类方式比较特殊）
+Colleaction接口中有一个iterator<E>（）方法，返回的是迭代器实现类对象
+1.通过Iterator接口接受实现类（多态）
+2.使用Iterator接口中的方法hasNext判断
+3使用next方法取出下一个元素
+
+boolean hasNext（）
+
+E next（）
+
+[Iterator<E>的接口也是有泛型的，泛型类型与集合一样]
+
+Iterator初始化时，获取迭代器的实现类对象，并把指针指向集合的-1索引
+next（）1.取出下一个元素，2.指针向后移动一位
+
+
+泛型
+当不知道使用什么数据类型的时候，可以使用泛型
+泛型可以看作是一个变量，用于接受数据类型
+创建集合对象的时候，就会确定泛型的数据类型
+
+创建集合时，默认的类型为Object类型
+类中泛型写在类名后
+class xxxx<E>(){}
+泛型定义在方法的修饰符和返回值之间
+
+含有泛型的接口
 
