@@ -147,9 +147,22 @@ containsKey
 keySet 遍历
 entrySet 遍历
   
+Map遍历方法
+1.Set<K> keySet() 把Map集合中所有的key取出并存储到<String>Set集合中->
+<String>Set get(key)获取相应value
+2.for（：map.keySet()）{}
 
+Entry 键值对
+当Map集合创建时，那么Map集合中创建一个Entry对象，用于记录键值映射关系
+用于遍历Map对象
+Set<Map.Entry<K,V>>entrySet();
+把Map集合内部的多个Entry对象取出并存储到Set集合中
 
+HashMap存储自定义类型键值
+//Map保证key为唯一值：作为key的元素需要重写hashcode方法及equals方法
 
+LinkedHashMap extends hashMap
+有序集合
 
 
 
