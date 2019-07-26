@@ -1,1 +1,21 @@
+异常
+Java异常是一个类，产生异常就是创建异常对象，并进行中断处理
+根类Java.lang.Throwable
+分为Error/Exception
+Exception：编译期异常
+RuntimeException，运行期异常
+
+SimpleDateFormat.parse(编译器异常)处理方法以下
+1.Throws，交给虚拟机处理，直接中断
+2.try catch，抛出异常之后，后续代码正常执行
+
+（运行期异常）处理方法
+通过try catch
+try{}，{}内 存放可能出现异常的代码
+catch{}，{}内 存放异常的处理逻辑
+
+Error 错误，处理方法为必须修改原代码
+
+
+
 
