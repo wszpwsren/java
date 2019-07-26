@@ -164,7 +164,12 @@ HashMap存储自定义类型键值
 LinkedHashMap extends hashMap
 有序集合
 
-
+Map接口的另一个实现类Hashtable
+实现一个hash表，不能存储NULL
+早期双列集合（JDK1.0）
+同步（单线程）
+Hashtable和Vector集合一样，在JDK1.2版本后被现金集合（HashMap，ArrayList）取代
+Hashtable的子类properties是一个唯一和IO流相结合的集合
 
 
 
