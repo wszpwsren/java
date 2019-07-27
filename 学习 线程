@@ -16,6 +16,52 @@ catch{}，{}内 存放异常的处理逻辑
 
 Error 错误，处理方法为必须修改原代码
 
+异常产生及处理
+JVM检测出程序会产生异常时
+1.JVM会根据异常产生的原因创建一个异常对象，其中包含异常产生的（内容，原因，位置）
+2.在getElement方法中，没有异常的处理逻辑（try catch），那么JVM会把异常对象抛出给方法的调用者（main）来处理这个异常-》main方法也没有异常的处理逻辑，继续把对象抛出给main方法的调用者JVM处理-》JVM 1.把异常对象以红色字体打印在console中 2 .JVM中断程序
+
+异常的处理：try catch finally throw throws
+
+throw
+使用throw在指定的方法中抛出指定的异常
+throw new xxxException（“异常产生的原因”）；
+zy：
+1.throw关键字必须写在方法内部
+2.throw关键字后面的new对象必须是Exception或Exception的子类对象
+3.throw关键字抛出指定的异常对象，我们就必须处理异常对象
+	[[throw创建的RuntimeException或其子类，我们可以不处理，默认交给JVM]]
+	throw关键字后创建的是编译异常，我们必须处理（throws，try catch）
+首先对方法传递的参数进行合法性校检
+如果参数不合法，那么必须使用抛出异常的方式，告知方法的调用者
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
