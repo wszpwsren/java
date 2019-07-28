@@ -49,7 +49,7 @@ throws声明的异常必须是Exception或其子类
 	如果抛出的多个异常对象有子父类关系，那么直接声明父类异常即可
 调用了一个声明抛出异常的方法，我们就必须处理声明的异常
 	要么继续throws，交给方法的调用者处理，最终给JVM处理；或者try catch自己处理异常
-FileNotFoundException为编译异常，必须处理这个异常，可以使用throws继续声明抛出异常对象，让方法的调用者处理
+FileNotFoundException为编译异常，必须处理这个异常，可以使用throws继续声明抛出异常对象，让方法的调用者处理                        
 FileNotFoundException为IOException的子类，只需要声明IOException
 
 try catch
