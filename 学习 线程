@@ -35,16 +35,43 @@ zy：
 首先对方法传递的参数进行合法性校检
 如果参数不合法，那么必须使用抛出异常的方式，告知方法的调用者
 
+Object类静态方法public static <T> T requireNonNull(T obj,String(覆写))
+查看指定引用对象不是null
 
+throws
+异常处理的第一种方式，交给别人处理
+会把异常对象声明抛出给方法的调用者处理，最终交给JVM处理——》中断处理
+修饰符 返回值类型 方法名（参数列表）throws xxxException{}
+zy：
+throws关键字必须写在方法声明处
+throws声明的异常必须是Exception或其子类
+方法内部如果抛出了多个异常对象，throws必须声明多个异常
+	如果抛出的多个异常对象有子父类关系，那么直接声明父类异常即可
+调用了一个声明抛出异常的方法，我们就必须处理声明的异常
+	要么继续throws，交给方法的调用者处理，最终给JVM处理；或者try catch自己处理异常
+FileNotFoundException为编译异常，必须处理这个异常，可以使用throws继续声明抛出异常对象，让方法的调用者处理
+FileNotFoundException为IOException的子类，只需要声明IOException
 
+try catch
+可以执行后续代码
+try{可能产生异常的代码}
+catch（定义一个异常的变量，用来接收try种抛出的异常对象）{异常的处理逻辑，异常之后如何处理}
+catch一般会记录日志
+zy：
+try中可能会抛出多个异常对象，那么可以使用多个catch处理这些异常对象
+如果try中出现了异常，那么会执行catch中的异常处理逻辑，执行完毕catch中的处理逻辑，继续执行try catch后的代码。
 
+Throwable类
+定义了三个异常处理方法
+String getMessage（）返回此throwable的简短描述
+String toString（）返回此throwable的详细消息字符串
+void printStarkTrace（）Jvm打印异常对象（最全面）
 
-
-
-
-
-
-
+finally
+如果try出现异常，那么try异常后的代码无法执行
+在语句try{}catch（）{}catch（）{}finally{}
+finally永远执行
+finally一般用于资源释放，无论程序是否出现异常
 
 
 
