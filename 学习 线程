@@ -244,10 +244,28 @@ notifyAll（）唤醒对象监视器（锁）上所有的进程
 线程间通信
 多线程处理同一资源，线程间存在线程通信问题；运用等待唤醒处理方式处理
 
-线程池->容器->集合（List/Set）
+线程池->容器->集合（List/Set）LinkedList<Thread>最好
+Thread x = list.remove(0);返回被移除的元素
+Thread x= linked.removeFirst();
+使用完毕后，线程池归还
+list.add(x);linked.addLast(t);
+JDK1.5之后，内置线程池，可以直接使用
 
+线程池的使用
+java.util.concurrent.Executors类 生产线程池的工厂类 
+静态static ExecutorService newFixedThreadPool（int nThreads）(创建固定数量线程的线程池)
+返回值ExecutorServicce接口，返回的时EcecutorService接口的实现类对象，我们使用该接口接受
+java.util.concurrent.ExecutorService：线程池接口
+用来从线程池中获取线程，调用start执行线程
+submit（Runnable task）提交一个Runnable任务用于执行
+void showdown 关闭/销毁线程池
 
-
+使用步骤
+使用线程池的工厂类Executors的静态方法newFixedThreadPool生产线程池
+创建一个类，实现Runnable接口，重写run方法，设置线程任务
+调用ExecutorService中的方法submit，传递线程任务（实现类），开启线程，执行run
+调用ExecutorService中的方法shutdown销毁（不建议使用）
+线程池会一直开启，使用完了之后，会自动把线程归还给线程池，线程池可继续使用
 
 
 
