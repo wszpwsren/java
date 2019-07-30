@@ -230,12 +230,21 @@ Timed Waitting 计时等待 :sleep(long) wait(long)时进入
 
 waitting(无限等待状态):OBject.notify()进行唤醒（cpu空闲时）
 一个正在无限期等待另一个线程执行一个特别的动作的线程状态
+[[两个线程必须用同步代码块，保证两个只有一个在执行]]
+同步锁必须唯一
+只有锁对象才能调用wait和notify方法
+Object void wait（long millis）
+Object void notify（）唤醒等待线程，会执行wait方法后的代码
 
+进入TimeWaiting的两种方式 
+sleep（long m）计时结束进入Runnable/Blocked（ready queue）
+wait（long m）wait方法在计时结束后，或被notify之后，进入Runnbale/Blocked
+notifyAll（）唤醒对象监视器（锁）上所有的进程
 
+线程间通信
+多线程处理同一资源，线程间存在线程通信问题；运用等待唤醒处理方式处理
 
-
-
-
+线程池->容器->集合（List/Set）
 
 
 
