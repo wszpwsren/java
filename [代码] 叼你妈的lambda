@@ -1,0 +1,22 @@
+public class DemoRecursionFiles {
+    public static void main(String[] args) {
+        getFiles(new File("cod1\\"));
+    }
+
+    private static void getFiles(File file) {
+        File[] files = file.listFiles(pathname -> pathname.isDirectory()?true:pathname.getName().toLowerCase().endsWith(".java"));
+        for (File file1 : files) {
+            if (file1.isDirectory()){
+                getFiles(file1);
+            }
+            if(file1.isFile()){
+                System.out.println(file1);
+                if(file1.getName().equals("DemoFile.java")){
+                    System.out.println("There is");
+                    System.out.close();
+                }
+            }
+        }
+        System.out.println(file+"  "+"None");
+    }
+}
