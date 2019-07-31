@@ -24,3 +24,97 @@ zy：
 路径不区分大小写
 路径中的文件名称分隔符使用反斜杠，反斜杠是转义字符，两个反斜杠代表一个反斜杠
 （c:\\xxx\\a.txt）
+
+File构造方法
+path路径可以是文件，或文件夹
+路径可以是相对、绝对
+路径可以存在，也可以不存在
+创建File对象，只是把字符串封装为File对象，不考虑路径的真假
+File（string parent string child）
+父路径子路径可以分开书写
+File（File parent string child）
+父路径是File类型，可以使用File的方法对路径进行操作
+
+file类常用方法
+获取
+String getPath
+返回路径
+String getAbsolutePath
+返回绝对路径
+string getName
+返回路径的结尾部分
+long length（）
+返回File表示的文件长度（大小），单位为字节
+文件夹没有大小（返回0）
+如果构造方法中给出的路径不存在，那么length返回0
+
+判断
+boolean exists
+判断存在
+boolean isDirectory
+判断是否为目录
+boolean isFile
+判断是否为文件
+boolean endsWith（）
+判断是否以xx结尾
+
+创建删除
+boolean CreateNewFile() 抛出IOException
+当文件不存在时，创建文件，可以使用相对路径，需要确保路径存在，否则异常
+我们调用方法时需要处理异常
+boolean delete()
+boolean mkdir()
+文件夹
+boolean mkdirs()
+多级文件夹
+文件夹存在时不会创建，返回false，构造方法中给出的路径不存在返回false
+boolean delete()
+可删除文件及文件夹
+文件夹中有内容返回false，路径不存在返回false
+delete方法是直接在硬盘中删除
+
+遍历
+String[] list()
+遍历构造方法中给出的目录，获取所有文件/文件夹名称，获取的名称返回到一个string数组
+File[] listFiles()
+遍历，返回值为路径（相对/绝对）
+zy：
+遍历的是构造方法中给出的目录
+如果构造方法中给出的目录路径不存在，那么空指针异常
+如果构造方法中给出的路径不是一个目录，那么空指针异常
+
+File类中有两个和listFiles重载的方法，方法的参数传递过滤器
+interface File[] FileFilter
+用于抽象（File对象）路径名的过滤器
+方法 boolean accept（File pathname）
+File pathname使用listFiles遍历得到的对象
+
+interface File[] FileNameFilter 
+过滤文件名称
+boolean accept（File dir，String name）
+dir：被遍历的目录
+name:使用ListFiles方法遍历目录，得到的目录与文件的名称
+zy：
+两个过滤器接口是没有实现类的，需要自己写实现类重写过滤方法，在方法中定义过滤规则
+
+递归
+递归要有条件限定
+构造方法禁止递归
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

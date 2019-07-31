@@ -33,6 +33,11 @@ zy：如果要省略，需要一起省略
 Lambda必须有上下文推断
 
 
+
+public interface DemoCalculator {
+    int calc(int a ,int b);
+}
+
 public class DemoLambdaTest {
     public static void main(String[] args) {
         System.out.println(invokeCalc(10, 20, (a, b) -> a + b));
