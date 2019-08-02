@@ -328,21 +328,129 @@ size：指定缓冲流内部缓冲区的大小，不指定默认
 3使用BufferedInputStream对象中read方法，读取文件
 4释放资源
 
+BufferedWriter extends Writer
+
+构造方法
+BufferedWriter（Writer out）
+BufferedWriter（Writer out int sz）
+参数
+传递Writer
+sz 指定缓冲区大小
+特有的成员方法：
+void newlkine（） 写入一个行分隔符。会根据不同的系统获取不同的行分隔符
+使用步骤：
+创建BufferedWriter对象，构造方法传递Writer
+调用BufferedWriter对象的方法wirte，把数据写入到内存缓冲区中
+调用BufferedWriter方法flush，把缓存区数据刷新到文件中
+释放资源
+
+BufferedReader extends Reader
+BufferedReader（Reader in）
+BufferedReader（Reader in int sz）
+参数
+传递Reader
+特有的成员方法
+public String readline（）读取一个文本行
+	行的中止符号：\n 换行\r回车 或\r\n
+返回值：包含该行内容的string,不包含行终止符，如已到达流末尾，则返回null
+readline并不移动指针
+
+转换流
+字符编码
+字符集：编码表，对字符进行编码
+ascii编码-ascii字符集
+英语编码，7位表示一个字符，共128字符，扩展集使用8位，共256位
+iso-8859-1，用于显示欧洲使用的语言  ，使用单字节编码，兼容ascii编码
+gb字符集 中文字符集 gb2312 简体中文表，兼容ascii
+gbk 最常用的码表，双字节编码
+Unicode 最多4字节 utf-8、utf-16、utf-32
+
+当utf-8默认读取windows默认gbk的时候，会出现编码
+转换流
+InputStreamReader
+可以把字节转换为字符（与FileReader同功能），并使用指定的charset读取字节，将字节转换为字符
+InputStreamWriter(InputStream Input)
+InputStreamWriter(InputStream Input, String charNameset)
+构造方法参数
+inputStream input 字节输入流
+使用步骤
+创建InputStreamWriter对象，构造方法中传递字节输入流和指定的编码表名称
+使用InputStreamWriter对象中的方法read读取文件
+释放资源
+zy：
+构造方法中指定的编码表名称要和文件的编码相同
+
+OutputStreamWriter
+OutputStreamWriter(OutputStream out)
+OutputStreamWriter(OutputStream out, String charNameset)
+out 字节输出流 可以用来写转换之后的字节到文件中
+charsetName 指定的编码表名称，不区分大小写
+使用步骤
+创建OutputStreamWriter对象，构造方法中传递字节输出流和指定的编码表名称
+使用OutputStreamWriter对象中的方法write，把字符转换为字节存在存储缓冲区中
+使用OutputStreamWriter对象中的方法flush，把内存缓冲区的字节刷新到文件中
+释放资源
+
+序列化流
+把对象以流的方式，写入到文件中保存，叫写对象，也叫对象的序列化
+对象中包含字节，所以使用字节流
+把文件中保存的对象，以流的方式读取出来，叫做读对象，也叫对象的反序列化
+ObjectOutputStream exten
+ds OutputStream：对象的序列化流
+构造方法ObjectOutputStream（OutputStream out）
+特有的成员方法：
+void writeObject（Object obj）
+使用步骤：
+创建ObjectOutputStream对象，构造方法中传递字节输出流
+使用ObjectOutputStream对象中的writeObject方法，吧对象写入到文件中
+释放资源
+
+序列化或反序列化需要该对象的类需要实现Serializable接口
+Serializable接口也称标记型接口
+	要进行序列化或反序列时，会检测该类是否实现了Serializable
+ObjectInputStream:对象的反序列化流
+
+反序列化流
+ObjectInputStream（InputStream in）
+in 字节输入流
+特有的成员方法
+Object readObject（）从ObjectInputStream读取对象
+
+[[当序列化完成后class文件进行了修改]]，那么再对文件进行反序列化时产生异常InvalidClass
+，产生原因为对class文件进行修改后，类的瞬态版本号发生了更改
+那么需要在class内自己定义一个瞬态版本号
+static final long serialVersionUID = （long xl）；
+
+transient:瞬态关键字
+被transient修饰的变量不能被序列化
+static：静态关键字
+静态优先于非静态加载到内存中
+static成员变量不能被序列化
 
 
+打印流：java.io.PrintStream extends OutputStream
+	PrintStream：为其他输出流添加了功能，使他们能方便的打印各种数据
+特点：
+只负责数据的输出
+永远不会抛出IOException
+有特有方法print println
+构造方法：
+PringtStream（File f）
+PringtStream（String fn）
+PringtStream（OutputStream os）目的地是一个字节输出流
+成员方法：
+close（）
+flush（）
+wirte（Byte[] byte）
+write（Byte[] byte int off int len）
+abstract write（int b）
+ZY:
+如果使用继承自父类的write写数据，那么查看数据的时候会查询编码表并转换
+如果使用自己特有的方法print/ln写数据，那么数据不进行转换
 
-
-
-
-
-
-
-
-
-
-
-
-
+PringtStream ps = new PrintStream（”String name“）
+System.setOut(ps)
+将标准输出流转换至ps
 
 
 
