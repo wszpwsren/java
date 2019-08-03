@@ -78,6 +78,103 @@ Scoket accept（）侦听并接受到此套接字的连接
 使用网络OutputStream对象中的方法write给客户端回写数据
 资源释放（Socket，ServerSocket）
 
+C/S传输
+当上传文件时，C没有将结束标记传输给S，那么S中网络input中read方法将读不到结束标记（-1），S进程将被阻塞，回传数据不进行，C读取不到回传数据的结束标记，C进入阻塞状态
+解决：当C上传完文件，写一个结束标记
+为防止同名文件被覆盖，使用一个命名规则对文件进行命名，例如：域名+毫秒值+随机数
+为了保证S一直工作，需要对accept进行死循环
+使用多线程提高程序的效率
+
+
+函数式接口
+
+函数式接口指有且只有一个抽象方法的接口
+@FunctionalInterface注解：函数式接口（标记至接口名上）
+函数式接口一般可以作为方法的参数和返回值类型来使用
+Lambda里没有生成class文件
+匿名内部内生成class文件
+
+自定义函数式接口
+当参数不符合方法条件时，方法不执行（不生成方法体（因为是传接口）），性能更高
+[[Runnbale可以作为函数式接口传参]]
+当方法的参数是一个接口，那么我们可以传递这个接口的匿名内部类
+
+
+主函数-重写接口方法/参数》方法1-参数》函数式接口-参数》方法1-方法操作后的参数/结果》主函数
+public static void main(String[] args) {
+        stratThread(() -> System.out.println(Thread.currentThread().getName()+"ThreadStart"));
+    }
+
+private static void stratThread(Runnable runnable) {
+//将参数传递给主函数重写了方法的接口
+        new Thread(runnable).start();
+
+    }
+
+函数式接口作为返回值
+主函数-参数接口》方法1-重写接口方法》主函数接收重写方法后的接口
+
+public static void main(String[] args) {
+        String[] strings= {"asd","222222","22d","asddd"};
+//方法1的返回值为重写了方法的接口
+        Arrays.sort(strings,return1());
+        System.out.println(Arrays.toString(strings));
+    }
+
+    private static Comparator<String> return1() {
+//重写接口方法
+        return (o1,o2)->o1.length()-o2.length();
+    }
+
+
+常用函数式接口java.util.function
+Supplier接口
+java.util.function.Supplier<T>  指定方法返回值的泛型<T>
+Supplier<T>称为生产型接口，指定接口的泛型是说明类型，那么接口中的get方法就产生说明类型的数据
+
+public static int getMAX(Supplier<Integer> sup){
+        return sup.get();
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Integer> arr= new ArrayList<>();
+        arr.add(100);
+        //将参数传给方法1，方法1将参数传给接口，重写接口方法，将重写后的接口处理的数据传给方法1，将返回值传给主方法
+        System.out.println(getMAX(()->{
+            Collections.sort(arr);
+            return arr.get(arr.size()-1);
+        }));
+    }
+
+
+Consumer接口
+java.util.function.Consumer<T>，消费型接口，消费一个数据，数据类型由泛型决定
+void accept（T t）
+
+default andThen
+作用：
+需要两个consumer接口，把两个Consumer接口组合（复制数据），再消费数据
+消费顺序为从前到后
+
+public static void main(String[] args) {
+        consumerT("naxx",(String name)->{
+            System.out.println(new StringBuilder().append(name).reverse().toString());;
+        });
+    }
+    private static void consumerT(String name ,Consumer<String> Icon) {
+        Icon.accept(name);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
