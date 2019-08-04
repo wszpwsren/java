@@ -151,7 +151,7 @@ Consumer接口
 java.util.function.Consumer<T>，消费型接口，消费一个数据，数据类型由泛型决定
 void accept（T t）
 
-default andThen
+默认方法default andThen
 作用：
 需要两个consumer接口，把两个Consumer接口组合（复制数据），再消费数据
 消费顺序为从前到后
@@ -165,23 +165,119 @@ public static void main(String[] args) {
         Icon.accept(name);
     }
 
+Predicate<T>
+对某种数据进行判断，返回boolean值
+boolean test（T t）用来对指定数据类型进行判断的方法
+
+默认方法and
+
+public static void main(String[] args) {
+        String str ="Strings";
+        System.out.println(PreT(str,string->string.contains("s"),string->string.endsWith("s")));
+    }
+
+//此方法需要优化，将for循环放入函数式方法
+    public static boolean PreT(String str,Predicate<String> pre1,Predicate<String> pre2) {
+        return pre1.test(str)&&pre2.test(str);
+    }
+
+ public static void main(String[] args) {
+        String[] arr = {"asd,男","333,女","op,男","p,女"};
+        List<String> list = new ArrayList<>();
+        for (String s : arr) {
+            if (checkF(s,(string)-> string.split(",")[0].length()==3
+            ,(string)->string.split(",")[1].equals("女"))){
+                list.add(s);
+            }
+        }
+        for (String s : list) {
+            System.out.println(s);
+        }
+    }
+
+    private static boolean checkF(String str, Predicate<String> pre1,Predicate<String> pre2) {
+        return pre1.and(pre2).test(str);
+    }
 
 
+Function<T,R>接口
+用来根据一个类型的数据得到一个另一个类型的数据
+R apply(T t)将t转换为r类型
+
+andThen，进行组合操作
+string s = fun1.andThen（fun2）.apply("123")
+fun1调用apply方法，把String转换为Integer
+fun2调用apply方法，把Integer转换为String
 
 
+Stream流，方法引用
+
+Stream流：集合/数组的操作
+方法引用：Lambda的简化方式
+
+Stream流（java8）流式编程
+List<String> z = list.stream().filter((name) -> name.startsWith("z"))
+                .filter((name) -> name.length() == 2)
+                .collect(Collectors.toList());
+基本特征：
+Pipelining：中间操作都返回流的本身，可以对操作进行优化，比如延迟执行laziness和短路short-circuiting
+内部迭代：stream流提供了内部迭代的方式，流可以直接调用遍历方法
+流的使用步骤：获取一个数据源-->数据转换-->执行操作获取想要的结果
+每次转换原有Stream对象不改变，返回一个新的Stream对象
+
+特点：
+Stream流只能被消费（调用）一次，每次调用完毕，那么流向方法结尾（下一个流开头），第一个流关闭，第一个Stream不能再被使用。
+获取流
+.Stream<T>并非函数式接口
+所有Collection集合可以通过stream方法获取流
+default Stream<E> stream()
+stream接口的静态方法of可以获取数据对应的流 
+static<T>Stream<T>of(T...values)【可变参数】（单列集合）
+
+常用方法：
+延迟方法与终结方法
+延迟方法：返回值仍然是Stream的方法
+终结方法：返回值类型不是Stream的方法
+
+终结方法 forEach：与for循环的for-each方法不同
+void forEach（Consumer<? super T>action）;
+
+filter方法
+Stream<T>filter(Predicate<? super T>predicate)
+Predicate唯一抽象方法 boolean test（T t）
+
+map方法
+将当前流映射到另外一个流
+<R>Stream<R>map(Function<? super T,？extends R>mapper)；
+
+Function接口
+抽象方法R apply(T t);
+
+终结方法long count()
+统计元素隔树
+
+延迟方法limit
+取用前几个
+Stream<T> limit (long maxSize);
+
+延迟方法skip
+跳过前几个
+
+静态方法concat
+合并为一个流
+static<T>Stream<T> concat(Stream<? extends T>a, Stream<? extends T>b)
 
 
+方法引用 Lambda优化
+当存在对应的对象/类/父类/this/super
+打印操作：把str传递给Sustem.out对象，调用out对象的方法pintln对字符串进行输出
+System.out已存在，priontln方法已存在，可以使用方法引用
+xxx（System.out::println）
+::为引用运算符，所在表达式被称为方法引用
+让System.out的println方法来取代Lambda
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+通过对象名引用成员方法
+使用前提：对象名已存在，成员方法已存在
+public static void main(String[] args) {
+        fun(new MethodReferenceObject()::printUper);
+    }
