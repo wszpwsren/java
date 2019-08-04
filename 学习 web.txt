@@ -281,3 +281,61 @@ xxx（System.out::println）
 public static void main(String[] args) {
         fun(new MethodReferenceObject()::printUper);
     }
+
+通过类名引用静态的成员方法
+使用前提：类已经存在，静态成员方法已存在
+
+使用super调用父类的成员方法
+ public void show(){
+        method(super::sayhello);
+    }
+
+使用this调用本类的成员方法
+
+public void buy(){
+        System.out.println("buy this");
+    }
+    public void execute(ThisTest tT){
+        tT.buy();
+    }
+    public void result(){
+        execute(this::buy);
+    }
+
+    public static void main(String[] args) {
+        new ThisTest02().result();
+    }
+
+类的构造器引用
+类的构造方法名称引用
+
+构造方法已知：Person（String name）
+创建对象的方法已知：new
+那么可以使用Person类的构造方法new创建对象
+
+public static void main(String[] args) {
+        classBuild("姓名",Person::new);
+    }
+    public static void classBuild(String name,PersonBuilder pB){
+        Person person = pB.build(name);
+        System.out.println(person.toString());
+    }
+
+数组的构造器引用
+
+数组为int[]类，构造方法为new 
+
+public static int[] arraybuild(int length,ArrayBuilder aB){
+        return aB.build(length);
+    }
+
+    public static void main(String[] args) {
+        int[]arr1 = arraybuild(10,(length -> new int[length]));
+        arraybuild(10,int[]::new);
+    }
+
+
+
+
+
+
