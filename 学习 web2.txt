@@ -115,33 +115,107 @@ methodName=setName
 //new 配置文件对象
 Properties properties = new Properties();
 //new 配置文件（类对象）载入器
-        ClassLoader classLoader = Person.class.getClassLoader();
+ClassLoader classLoader = Person.class.getClassLoader();
 //将配置文件数据源输入一个流
-        InputStream resourceAsStream = classLoader.getResourceAsStream("pro.properties");
+InputStream resourceAsStream = classLoader.getResourceAsStream("pro.properties");
 //载入配置文件<T>流
-        properties.load(resourceAsStream);
+properties.load(resourceAsStream);
 //加载配置文件
 String className = properties.getProperty("className");
 String methodName = properties.getProperty("methodName");
 
 3、使用反射加载类文件
+Class aClass = Class.forName(className);
+
 4、创建对象
+Object obj = aClass.getDeclaredConstructor().newInstance();
+Method methods = aClass.getMethod(methodName);
+
 5、执行方法
+methods.invoke(obj);
+
 注解
+概念：说明程序的
+作用分类：
+编写文档：生成文档
+代码分析：对代码进行分析（反射）
+编译检查：实现基本的编译检查
+
+JDK预定义注解
+
+@override 检测重写方法是否正确
+@Deprecated 将该注解标注的内容已过时
+@SuperessWarning 压制警告（不显示）一般传”all“
+
+自定义注解
+public interface heima_05.day01.MyAnno extends java.lang.annotation.Annotation {
+}
+注解本质是接口，该接口默认继承Annotation接口
+
+格式：
 
 
+元注解：
+用于描述注解的注解
+@Target 描述注解能够作用的位置
+ElementType[] value()
+ElementType:元素类型
+Type：用于类
+Method：用于方法
+Filed：用于成员变量
+表示注解只能用于用于x元素类型上
 
+@Retention 描述注解被保留的阶段
+RetentionPolicy[] value()
+Source Class Runtime
+一般使用的为Runtime
 
+@Documented 描述注解是否被抽取到api文档中
 
+@Inherited 描述注解是否被子类继承
 
+public @interface xxxxx{
+	属性列表
+}
+属性：
+可定义的成员方法
+	要求：
+	属性的返回值类型必须为
+		基本数据类型
+		字符串String
+		枚举
+		注解
+		以上类型的数组
+	定义的属性在使用时，需要给属性赋值
+	@xxx（xx=1）
+	如果不使用赋值，那么在定义时，public @interface xxx{int age（） default；}
+	如果只有一个属性，且属性名为value，那么在赋值时，value可省略
+	赋值方式：12 、value =12、per=Person.P1（枚举），anno=@Anno，strs = {”a“，”b“}
 
+实例：
+注解的解析
 
+注解
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Pro {
+    String className();
+    String methodName();
+}
 
+//解析注解
+//获取该类的字节码文件对象（获取注解定位的元素的对象）
+Class<ReflectDemo04> reflectDemo04Class = ReflectDemo04.class;
+//获取注解对象->在内存中生成了一个注解接口的实现类对象
+Pro annotation = reflectDemo04Class.getAnnotation(Pro.class);
+//调用注解对象中定义的抽象方法，获取返回值
+String className = annotation.className();
+String methodName = annotation.methodName();
 
-
-
-
-
+注解小结：
+大多数情况，我们使用注解，而不是自定义注解
+注解是给编译器，以及解析程序使用
+注解不是程序的一部分，可以理解为一个注释
 
 
 
