@@ -1,1 +1,194 @@
-数据库
+数据库DataBase
+DB
+数据库特点：持久化存储数据的
+	方便存储及管理
+	使用了统一的方式操作数据库
+配置：
+	net start mysql
+	net stop mysql
+	mysql -uroot -p	密码0	exit
+	mysql -h127.0.0.1 -uroot -p密码	quit
+	mysql --host=127.0.0.1 --user=root --password=密码
+	
+表：文件（frm）
+
+SQL：Structured Query Language
+	定义了操作所有关系型数据库的语言
+SQL语言
+	SQL语句可以单行或多行书写，以分号结尾
+	MySQL的SQL语句不区分大小写，关键字建议使用大写
+	注释：# 单行注释（MySQL特有）
+	-- 单行注释（注意空格）
+	/* 多行注释 */
+SQL分类：DDL Definition
+	数据定义语言
+	操作数据库、表
+	DML Manipulation
+	数据操作语言
+	操作数据记录（增删改）
+	DQL Query
+	数据查询语言
+	操作数据记录（查）
+	DCL
+	数据控制语言
+	权限控制
+
+DDL 数据库
+	操作数据库
+	CRUD
+	
+	Create
+	Retrieve 查询
+	Update 修改
+	Delete
+	使用数据库
+
+Retrieve
+Create
+查询所有数据库名称：
+https://www.sindns.net/info/a/wangluobiancheng/mysql/20160806/1249.html
+	[[[show databases]]]
+/不操作	（information_schema不存在对应的物理文件（视图））
+/不操作	mysql 核心数据库
+/不操作	performance_schema 性能提升操作
+	sakila 设计数据库的参考
+	sys 数据来自performance_schama，performance_schema的复杂度降低，让DBA能更好的阅读这个库里的内容。让DBA更快的了解DB的运行情况。
+	[查看数据库的字符集]（查看某个数据库的创建语句）
+	show create database xxx
+	[创建数据库]
+	create database
+	[判断数据库是否存在]
+	if not exists xxx
+	[设置字符集]
+	create database xxx character set gbk
+create database if not exists db04 character set gbk;
+	
+Update
+	[修改字符集]
+	alter database xxx character set utf8
+Delete
+	[删除数据库]
+	drop database if exists xxx
+使用数据库
+	[使用数据库]
+	use xxx
+	[查看使用的数据库]
+	select database（）
+
+DDL 定义数据库
+Retrieve
+	查询所有表
+	show tables
+	查询表结构
+	desc xxx	
+Create
+创建表
+	语法：create table xxx（
+	列名1	数据类型1，	
+	列名2	数据类型2，	
+	列名n	数据类型n
+	）
+	*数据库数据类型：
+	1、int 整数类型
+	xxx int
+	2、double 浮点数
+	xxx double（5，2）//999.99
+	3、date 日期//只包含年月日 yyyy-MM-dd
+	4、datetime 日期 //年月日时分秒 yyyy-MM-dd HH:mm:ss
+	5、timestamp 时间戳 //年月日时分秒 yyyy-MM-dd HH:mm:ss
+	如果为timestamp类型，不给这个字段赋值时，则默认使用当前时间赋值
+	[[[需要在定义时，将其默认值设为null，dafault设置current_timestamp]]]
+	6、varchar 字符串
+	xxx varchar (20) :20字符（20char）
+Delete
+删除表
+	drop table if exists xxx；
+	[[复制表]]
+	create database xxx like yyy
+Update
+修改表
+	[修改表名]
+	alter table yyy rename to xxx；
+	[修改表字符集]
+	alter table xxx character set gbk;
+	[添加列]
+	alter table xxx add 列名1，数据类型1
+	[修改列的名称/类型]
+	alter table xxx change yyy zzz 数据类型
+	alter table xxx modify xxx 数据类型（只修改数据类型）
+	[删除列]	
+	alter table stu drop xxx
+
+	SQLYog
+
+DML：操作数据库
+添加数据
+		insert into xxx（列名1，列名2，...列名n）values（值1，值2,...值n）
+ZY:
+如果表明后，不定义列名，则默认给所有列添加值
+[[[除数字类型]]]，其他类型使用引号（单双都可以）
+	
+删除数据
+		delete from xxx  where 条件
+		truncate table stu 删除表，并创建同属性新表
+zy：
+如果不写条件，那么将表内数据全部删除
+
+修改数据
+		update xxx set 列名 = 值， 列名 =值... where 条件；
+zy：
+如果不写条件，那么将表内数据全部修改
+
+
+DQL：查询数据库
+
+查询数据 
+
+语法
+		select 字段列表 
+		from 表名列表 
+		where 条件列表 
+		group by 分组字段
+		having 分组之后的条件
+		order by 排序
+		limit 分页限定
+
+多字段查询
+	select 字段名1，字段名2，...from 表名；
+	如果查询所有字段，可以使用*替代（不常用）
+去除重复
+	select distinct
+计算列
+	*一般可以使用四则运算计算一些列的值（一般进行数值型计算）
+	[[ifnull（表达式1，表达式2）列名1]]
+	*null参与的计算，结果均为null
+	表达式1：哪个字段需要判断为null
+	表达式2：如果改字段为null，则set该值	
+
+条件查询
+1、where子句后跟条件
+2、运算符
+	between...and
+	in(集合)
+	like
+	占位符：	_ 单个任意单个字符
+		% 多个任意字符
+	is null 	* 判断语句中不能用=null 而是is null
+		*反义判断为 is not null
+	||&&！
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
