@@ -160,7 +160,7 @@ DQL：查询数据库
 	select distinct
 计算列
 	*一般可以使用四则运算计算一些列的值（一般进行数值型计算）
-	[[ifnull（表达式1，表达式2）列名1]]
+	[[ifnull（表达式1，表达式2）列名1]] AS 别名1
 	*null参与的计算，结果均为null
 	表达式1：哪个字段需要判断为null
 	表达式2：如果改字段为null，则set该值	
@@ -176,7 +176,144 @@ DQL：查询数据库
 	is null 	* 判断语句中不能用=null 而是is null
 		*反义判断为 is not null
 	||&&！
+
+排序查询
+	order by 排序字段 排序方式
+	*如果不写排序方式则为升序（ASC）
+	-- 按照pop排名，如果pop一样，那么按照gnp排名
+	SELECT * FROM country ORDER BY Population ASC , GNP ASC;
+
+聚合函数
+	将一列数据作为一个整体，进行纵向的计算
+	count：计算个数
+	max：最大值
+	min：最小值
+	sum：计算和   *自动排除空值
+	avg：计算平均值
+	聚合函数的计算排除空值
+语法	SELECT COUNT(IFNULL(IndepYear,0)) AS COUNT FROM country;
+zy：
+	选择不包含空值的列进行计算
+	选择非空列方式：主键
+	IFNULL函数
+分组查询
+语法	group by 分组字段1；
+	SELECT Continent --分组字段,AVG(LifeExpectancy) -- 聚合函数 FROM country GROUP BY Continent;
+	-- avg低于xx不参与统计
+	SELECT Continent,AVG(LifeExpectancy),COUNT(`Code`) FROM country WHERE LifeExpectancy > 50 GROUP BY Continent;
+	-- 分组后count低于15的不显示
+	SELECT Continent,AVG(LifeExpectancy),COUNT(`Code`) FROM country WHERE LifeExpectancy > 50 GROUP BY Continent HAVING COUNT(`Code`)>15;
+zy：
+	分组之后，可查询的字段：分组字段，聚合函数1，聚合函数2
+	where作用于分组之前，having作用于分组之后
+	where后不可以跟聚合函数，having可以跟聚合函数
+	聚合函数一般会起别名
+
+分页查询
+语法	limit 开始的索引，每页查询条数；、
+	SELECT * FROM country LIMIT 0,3;-- 第一页
+	SELECT * FROM country LIMIT 3,3;-- 第二页
+	公式：开始的索引 = （当前页码-1）*每页
+zy：
+	分页操作（limit）为方言
+
+约束
+	概念：对表中的数据进行限定，保证数据得正确性、有效性和完整性
+
+	分类：	
+
+	主键约束 primary key
+		含义：	非空且唯一
+			一张表只能有一个字段为主键
+			主键为表中记录的标识
+		创建表时添加主键约束
+		CREATE TABLE stu(
+			ID INT PRIMARY KEY, 
+			NAME VARCHAR(20)
+		);
+		删除主键	
+		ALTER TABLE stu DROP PRIMARY KEY;
+		修改主键
+		ALTER TABLE stu MODIFY ID INT PRIMARY KEY;
 	
+	自动增长
+		如果某列为数值类型没使用auto_increment，可以完成自动增长
+		-- 自动增长时，新建数据以上一条数据为基准
+		删除自动增长	
+
+	非空约束 not null
+		在创建表时创建约束
+		CREATE TABLE stu(
+			id INT,
+			NAME VARCHAR(20) NOT NULL 
+			);
+		ALTER TABLE stu MODIFY NAME VARCHAR(20) NOT NULL;	
+		删除非空约束
+		ALTER TABLE stu MODIFY NAME VARCHAR(20);
+
+	唯一约束 uinque
+	zy：
+		unique不能以该方法删除（方法如下）或添加（删除重复数据）		
+		ALTER TABLE stu MODIFY NAME VARCHAR(20);
+		修改方式
+		ALTER TABLE stu DROP INDEX NAME ;
+
+	外键约束 foreign key
+
+		让主表的一列成为子表的键，保证数据的正确性
+		外键值可以为null，但不能为字表不存在的数据
+		在创建表时，可以添加外键
+		语法：
+	create table 表明（
+		...
+		外键列
+	constant 外键名称 foreign key 外键列名称 reference 主表名称（主表列/* 一般用主键*/名称）
+
+		）
+
+	CREATE TABLE employee(
+		id INT PRIMARY KEY AUTO_INCREMENT,
+		`Name` VARCHAR(20),
+		age INT,
+		dep_id INT,
+		CONSTRAINT emp_dept_id FOREIGN KEY (dep_id) REFERENCES department(id);
+		)
+		删除外键
+	alter table employee drop foreign key emp_dept_fk	
+		在创建表后，添加外键
+	alter table employee add constraint emp_dept_fk foreign key (dep_id)  references department(id)
+
+	级联操作
+
+		操作父表外键数据，之后用级联替代
+	UPDATE employee SET dep_id = NULL WHERE dep_id = 1;
+	UPDATE employee SET dep_id = 5 WHERE dep_id = NULL;
+
+		添加外键，设置级联更新，设置级联删除
+	alter table employee add constraint emp_dept_fk foreign key (dep_id)  references department(id) ON UPDATE CASCADE ON DELETE CASCADE；
+
+数据库的设计——范式
+	1、多表之间的关系
+		1、一对一关系
+		
+	2、范式
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
