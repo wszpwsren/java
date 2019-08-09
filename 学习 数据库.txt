@@ -333,28 +333,132 @@ zy：
 	2、UI
 		还原：执行sql脚本
 
+多表查询
+	语法：
+	select 列名 from 表名 where
+
+	笛卡尔积
+	A X B
+	笛卡尔积得出的不一定都是正确的数据，需要消除无用的数据
 
 
+	多表查询的分类：
+		内连接查询
+		zy：
+			1、从哪些表中查数据
+			2、查询条件是什么
+			3、查询哪些字段
+			1、隐式内链接
+			使用where条件消除无用数据
+		SELECT * FROM country,countrylanguage WHERE `Code`=CountryCode;
+		
+		SELECT 
+			c1.GovernmentForm,
+			c2.`Language`,
+			c2.Percentage
+		FROM
+			country c1,
+			countrylanguage c2
+		WHERE
+			c1.CODE = c2.CountryCode;
 
+			2、显式内链接
+			语法：select 字段列表 from 表名（单表） inner join 表名 on 条件
+			-- inner可省略
+		SELECT
+			c1.`Name`,
+			c2.`Language`,
+			c2.Percentage
+		FROM
+			country c1
+		INNER JOIN
+			countrylanguage c2
+		ON
+			c1.`Code`=c2.CountryCode;
 
+		外连接查询
+			1、左外连接
+			-- outer可省略
+			-- 当需要外接表，但不能限定外键非空时
+			-- 查询的是左表的所有数据及外表数据（以ON的数据为外键）
+			语法：select 字段列表 from 表1 left outer join 表2 on条件
+			SELECT 
+				c1.name,
+				c2.*
+			FROM
+				country c1
+			LEFT JOIN
+				countrylanguage c2
+			ON
+				c1.`Code`=c2.CountryCode;
+			2、右外连接
+			-- 查询的是右表的所有数据及外表数据（以ON的数据为外键）
+		子查询
+			概念：查询中嵌套查询，称嵌套的查询为子查询
+	SELECT * FROM country WHERE SurfaceArea = (SELECT MAX(SurfaceArea) FROM country );
 
+			子查询的结果是单行单列的：
+				子查询可以作为条件，使用运算符判断
+	SELECT * FROM country WHERE SurfaceArea <(SELECT AVG(SurfaceArea) FROM country );
+			
+			子查询的结果是多行单列的：
+				子查询可以作为条件，使用运算符 IN判断
+	SELECT * FROM country WHERE CODE IN (SELECT CountryCode FROM countrylanguage WHERE LANGUAGE = "english" OR LANGUAGE = "chinese");
 
+			子查询的结果是多行多列的
+				子查询作为虚拟表，放在from后作为条件
+	SELECT * FROM countrylanguage c1,(SELECT * FROM country WHERE Population >10000000) q1 WHERE c1.CountryCode= q1.`Code`;
+	
 
+事务：
+	概念：
+	如果一个包含多个步骤的业务操作，被事务管理，那么这些操作要么同时成功，要么同时失败
+	操作：
+		开启事务：start transaction
+		回滚：rollback
+		提交事务：commit
+	MySQL数据库中事务默认自动提交  
+		-- 每条DML提交一次事务
+		-- Oracle默认手动提交事务
+		-- 事务提交的方式：自动提交（如↑）/手动提交
+		-- 手动提交：需要先开启事务
+		修改事务的默认提交方式-- SELECT @@autocommit;,value为1则自动提交
+	
+	四大特征：
+		原子性：不可拆分（同时成功/失败）
+		持久性：当事务提交或回滚后，数据库会持久化地保存数据
+		隔离性：多个事务之间相互独立（分隔离级别）
+		一致性：事务必须使数据库从一个一致性状态变换到另一个一致性状态
+	
+	事务的隔离级别：
+		多个事务之间相互隔离。如果多个事务并发，通过设置隔离级别解决问题
+		存在问题
+脏读：一个事务，读取到另一个事务中没有提交的数据
+不可重复读（虚读）：同一个事务中，两次读取到的数据不一样
+幻读：一个事务DML数据表中所有记录，另一个事务添加了一条数据，则第一个事务查询不到自己的修改
 
+		隔离级别：
+			read uncommited：读 未提交
+				会产生问题：脏读、虚读、幻读
+			read commited： 读 已提交（Oracle默认）
+				会产生问题：虚读、幻读
+			repeatable read： 可重复读（mysql默认）
+				会产生问题：幻读
+			serializable：串行化（锁表）
+				无问题
+		zy：隔离级别从小到大，安全性越来越高，性能越来越低
+		查询隔离级别：select @@tx_isolation；
+		设置隔离级别：set global transaction isolation level 级别字符串；-- 重启数据库生效
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+DCL 管理用户、授权
+	添加用户
+		create user “用户名“@”主机名” identified by “密码”；
+		通配符：%表示可以在任意主机使用用户登录（“用户名”@“%”）
+	删除用户
+		drop user
+	修改用户密码
+		set password for “用户名”@“主机名” = password（“新密码”）；
+	查询用户
+		切换至mysql数据库，查询uesr表
+		
 
