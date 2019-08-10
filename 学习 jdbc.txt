@@ -1,0 +1,33 @@
+JDBC
+Java DataBase Connectivity 
+JDBC：官方定义了操作所有关系型数据库的规则——接口
+JDBC实现类：数据库驱动
+[执行代码的是驱动包（jar）中的实现类]
+
+入门：
+	将jar包导入工程
+		复制jar包到目录下
+		右键add as library
+	注册驱动
+	
+步骤：	
+	获取数据库连接对象Connection
+	定义sql
+	获取sql语句的对象Statement
+	执行sql，接收返回结果
+	处理数据
+	释放资源
+
+	Class.forName("com.mysql.cj.jdbc.Driver");
+        	Connection root = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "683512");
+        	String sql = "update country set indepyear = -3000 where code = 'chn'";
+        	Statement statement = root.createStatement();
+       	 int i = statement.executeUpdate(sql);
+        	System.out.println(i);
+        	statement.close();
+        	root.close();
+
+详解对象：
+	DriverManager
+	Connection
+	Statement
