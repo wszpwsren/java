@@ -52,12 +52,32 @@ JDBC实现类：数据库驱动
 			提交事务：commit（）；
 			回滚事务：rollback（）；
 	Statement：执行sql对象
-	ResultSet：结果集对象
+		执行sql：execute（String sql）：执行任意sql
+			int executeUpdate（String sql）：执行DML语句（insert/update/delete）、DDL语句（create/alter/drop）
+			返回值为影响的行数
+			ResultSet executeQuery（String sql）：执行DDL语句	
+	ResultSet：结果集对象，封装查询结果
+		next（）；光标从当前位置向前移动一行
+		getxxx（）；获取数据//xxx代表数据类型
+			参数：
+				int：代表列的编号（从1开始）
+				string：代表列的名称  
+			使用步骤
+				游标向下移动，判断是否是最后一行末尾，取出数据
 	PreparedStatement：执行sql对象
 
-
-
-
+抽取JDBC工具类：JDBCUtils
+	目的：简化书写
+	分析：
+		抽取一个方法注册驱动（）
+		抽取一个方法获取连接对象
+			//不希望传参，需要保证工具类的通用性
+			//使用配置文件
+		抽取一个方法释放资源
+			//释放资源需要分别释放
+	详见\src\heima_06\day01\JDBCDemoUtils.java
+	\src\jdbc.properties
+	\src\heima_06\day01\util\JDBCUtils.java
 
 
 
