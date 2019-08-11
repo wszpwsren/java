@@ -28,10 +28,32 @@ JDBC实现类：数据库驱动
         	root.close();
 
 详解对象：
-	DriverManager
-	Connection
-	Statement
-
+	DriverManager：驱动管理器对象
+		功能
+		注册驱动//可省略：Class.forName("com.mysql.cj.jdbc.Driver");
+		告诉驱动使用哪个jar
+		static {
+        			try {
+            				DriverManager.registerDriver(new Driver());
+        			} catch (SQLException var1) {
+            				throw new RuntimeException("Can't register driver!");
+        			}
+    		}
+		获取数据库连接：
+	Connection root = DriverManager.getConnection("jdbc:mysql://localhost:3306/world", "root", "683512");
+		url：指定连接的路径
+		mysql调用：jdbc:mysql://ip(域名)：端口号/数据库名称
+	Connection：数据库连接对象
+		功能：
+		获取statement
+	 	获取preparedstatement
+		管理事务：
+			开启事务：setAutoCommit：调用该方法，设置参数为false即开启事务
+			提交事务：commit（）；
+			回滚事务：rollback（）；
+	Statement：执行sql对象
+	ResultSet：结果集对象
+	PreparedStatement：执行sql对象
 
 
 
