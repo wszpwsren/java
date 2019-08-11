@@ -65,6 +65,27 @@ JDBC实现类：数据库驱动
 			使用步骤
 				游标向下移动，判断是否是最后一行末尾，取出数据
 	PreparedStatement：执行sql对象
+			SQL注入问题
+				sql。。。。or 'a'='a';
+·			在拼接sql时，有一些sql的特殊关键字参与字符串的拼接，会造成安全性问题
+			解决办法：使用PreparedStatement：预编译sql语句对象
+			特点：参数使用？占位符替代			
+				步骤：
+		1获取数据库连接对象Connection
+		2定义sql
+			zy：参数使用占位符‘？’
+			如select * from stu where id=？ and name = ？；
+		3获取sql语句的对象PreparedStatement，参数传递sql语句
+		Connection.prepareStatement(String sql)
+		4给？赋值
+			setxxx（参数1，参数2）
+				参数1-》？的位置，从1开始
+				参数2-》？的值
+		5执行sql，接收返回结果，不需要传递sql语句
+		6处理数据
+		7释放资源
+
+			后续将会使用PreparedStatement来完成CRUD操作
 
 抽取JDBC工具类：JDBCUtils
 	目的：简化书写
@@ -79,13 +100,24 @@ JDBC实现类：数据库驱动
 	\src\jdbc.properties
 	\src\heima_06\day01\util\JDBCUtils.java
 
+JDBC控制事务
+	事务：一个包含多个步骤的业务操作
+	操作：开启事务，回滚事务，提交事务
+		开启事务：setAutoCommit：调用该方法，设置参数为false即开启事务
+			执行sql前开启事务
+		提交事务：commit（）；
+			sql执行完成后提交事务
+		回滚事务：rollback（）；
+			catch中回滚
+
+	当异常出现就rollback，那么catch设置为exception
+	connection可能为null，需要判断connection是否为null
+
+详见\src\heima_06\day01\JDBCDemoTran.java
 
 
-
-
-
-
-
+数据库连接池
+	
 
 
 
