@@ -176,8 +176,18 @@ System.out.println(connection);
 详见\src\datasource\utils\JDBCUtils.java
 
 
-Spring JDBC
-
+Spring JDBC：Spring框架提供的工具类，用于封装JDBC
+	提供了一个JDBCTemplate 对象简化JDBC的开发
+	步骤：
+	导入jar包
+	创建JdbcTemplate对象。依赖于数据源DtaSource
+		JdbcTemplate template = new JdbcTemplate（ds）；
+	调用JdbcTemplate的方法来完成CRUD的操作
+		update（）；执行DML语句
+		queryForMap();执行DQL语句，将结果集封装为map集合
+		queryForList（）；执行DQL语句，将结果集封装为List集合
+		query（）；，将结果封装为JavaBean对象
+		queryForObject：将结果封装为对象
 
 
 
