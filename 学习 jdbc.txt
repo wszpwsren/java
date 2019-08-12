@@ -117,7 +117,60 @@ JDBC控制事务
 
 
 数据库连接池
+	概念：是一个容器：存放数据库连接的容器
+		当系统初始化好后，容器会申请一些连接对象，当用户访问数据库时，从容器中获取连接对象，用户访问完后，会将连接对象归还给容器
+	好处：节约资源、高效
+	实现：由数据库厂家实现：
+		基本实现：生成标准connection对象
+			获取连接：getconnection（）
+			归还连接：调用connection.close（）归还连接
+			c3p0：数据库连接池技术//比较老
+			Druid：数据库连接池技术，由阿里巴巴实现
+		连接池实现：申请自动参与连接池的connection对象
 	
+c3p0：实现
+		导入c3p0-0.9.5.2、mchange-commons-java-0.2.11
+		定义配置文件：
+			c3p0.properties或c3p0-config.xml
+			路径：类路径（将文件放入src目录下）
+			config可以配置多个，如果不设置，那么使用默认config
+			配置方法DataSource ds  = new ComboPooledDataSource("otherc3p0");
+		创建核心对象 ComboPooledDataSource
+		获取连接：getconnnection
+		
+Druid：
+	步骤：
+		导入jar包
+		定义配置文件：
+			特点：
+			是properties形式的
+			可以放在任意目录下
+		获取数据库连接池：
+			通过工厂类DuridDataSourceFactory获取
+		获取连接：
+			getconnection	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
