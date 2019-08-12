@@ -145,17 +145,38 @@ Druid：
 			特点：
 			是properties形式的
 			可以放在任意目录下
+		加载配置文件：
+			Properties
 		获取数据库连接池：
 			通过工厂类DuridDataSourceFactory获取
 		获取连接：
 			getconnection	
 
+//导包
+//定义配置文件
+//加载配置文件
+Properties properties = new Properties();
+InputStream resourceAsStream = DruidDemo.class.getClassLoader().getResourceAsStream("druid.properties");
+properties.load(resourceAsStream);
+//获取连接池
+DataSource dataSource = DruidDataSourceFactory.createDataSource(properties);
+//获取连接
+Connection connection = dataSource.getConnection();
+System.out.println(connection);
+
+		
+		简化操作：
+		定义工具类
+		定义类：JDBCUTILS
+		提供静态代码块加载配置文件，初始化连接池对象
+		提供方法
+			获取连接方法：通过数据库连接池获取连接
+			释放资源
+			获取连接池的方法
+详见\src\datasource\utils\JDBCUtils.java
 
 
-
-
-
-
+Spring JDBC
 
 
 
