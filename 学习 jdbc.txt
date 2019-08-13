@@ -182,12 +182,18 @@ Spring JDBC：Spring框架提供的工具类，用于封装JDBC
 	导入jar包
 	创建JdbcTemplate对象。依赖于数据源DtaSource
 		JdbcTemplate template = new JdbcTemplate（ds）；
-	调用JdbcTemplate的方法来完成CRUD的操作
+			调用JdbcTemplate的方法来完成CRUD的操作
 		update（）；执行DML语句
 		queryForMap();执行DQL语句，将结果集封装为map集合
+			//查询的结果集长度只能为1，列名为key，值作为value
 		queryForList（）；执行DQL语句，将结果集封装为List集合
+			//将每一条记录封装为map集合，再将多个map集合装在到list集合中
 		query（）；，将结果封装为JavaBean对象
+			//query的参数RowMapper，
+			一般我们使用BeanPropertyRowMapper实现类，实现自动向JavaBean的自动封装
 		queryForObject：将结果封装为对象
+			//一般用于聚合函数
+			Long aLong = template.queryForObject(sql, long.class);
 
 
 
